@@ -89,7 +89,7 @@ class App extends Component {
       case "profile":
         return <ProfilePage />;
       default:
-        return <div>404</div>;
+        return <div>Loading...</div>;
     }
   }
 
