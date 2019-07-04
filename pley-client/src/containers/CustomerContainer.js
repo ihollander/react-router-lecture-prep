@@ -11,7 +11,7 @@ class CustomerContainer extends React.Component {
               <CustomerCard
                 key={customer.id}
                 {...customer}
-                setCurrentPage={this.props.setCurrentPage}
+                setCurrentCustomer={this.props.setCurrentCustomer}
               />
             );
           })

@@ -5,30 +5,12 @@ import AllCustomersPage from "./AllCustomersPage";
 import Navbar from "./Navbar";
 import ProfilePage from "./ProfilePage";
 
-// hacky approach to get url info, demo purposes only!
-const getRouteInfo = routeString => {
-  const [path, queryString] = routeString.split("?");
-  const [route, ...params] = path.split("/");
-
-  let queryParams = null;
-  if (queryString) {
-    queryParams = queryString.split("&").reduce((obj, cur) => {
-      const [key, value] = cur.split("=");
-      obj[key] = value;
-      return obj;
-    }, {});
-  }
-  return {
-    route,
-    params,
-    queryParams
-  };
-};
-
 class App extends Component {
   state = {
-    route: "home",
+    page: "home",
     customers: [],
+    search: "",
+    currentCustomerId: null,
     loading: true
   };
 
@@ -58,19 +40,27 @@ class App extends Component {
     this.setState({ customers: updatedCustomers });
   };
 
-  setCurrentPage = route => this.setState({ route });
+  setCurrentPage = page =>
+    this.setState({ page, search: "", currentCustomerId: null });
+
+  setCurrentCustomer = currentCustomerId =>
+    this.setState({ currentCustomerId, page: "customers" });
+
+  setSearchTerm = search => this.setState({ search, page: "customers" });
 
   renderPage() {
-    const routeInfo = getRouteInfo(this.state.route);
-    console.log("routeInfo:", routeInfo);
-    switch (routeInfo.route) {
+    console.log("page:", this.state.page);
+    switch (this.state.page) {
       case "home":
-        return <HomePage setCurrentPage={this.setCurrentPage} />;
+        return <HomePage setSearchTerm={this.setSearchTerm} />;
       case "customers":
         return (
           <AllCustomersPage
-            routeInfo={routeInfo}
-            setCurrentPage={this.setCurrentPage}
+            customers={this.state.customers}
+            search={this.state.search}
+            currentCustomerId={this.state.currentCustomerId}
+            setCurrentCustomer={this.setCurrentCustomer}
+            addReview={this.addReview}
           />
         );
       case "profile":

@@ -13,7 +13,7 @@ class SearchBar extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    this.props.setCurrentPage(`customers?search=${this.state.filterValue}`);
+    this.props.setSearchTerm(this.state.filterValue);
   };
 
   render() {

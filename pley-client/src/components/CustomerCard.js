@@ -2,7 +2,7 @@ import React from "react";
 import StarRating from "./StarRating";
 
 function CustomerCard({
-  setCurrentPage,
+  setCurrentCustomer,
   id,
   avatar_url,
   name,
@@ -10,10 +10,7 @@ function CustomerCard({
   average_tip_rating
 }) {
   return (
-    <div
-      onClick={e => setCurrentPage(`customers/${id}`)}
-      className="customer-card"
-    >
+    <div onClick={() => setCurrentCustomer(id)} className="customer-card">
       <div className="card-image">
         <img src={avatar_url} alt={name} />
       </div>
