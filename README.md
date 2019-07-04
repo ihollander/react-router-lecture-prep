@@ -1,5 +1,18 @@
 # React Router
 
+## SWBAT
+
+- [ ] Create a multi-page SPA
+- [ ] Explain the advantages of using React Router
+- [ ] Utilize the most common `react-router` components to build a SPA: `BrowserRouter`, `Link`, `NavLink`, `Route`, `Switch`
+- [ ] Use `push`, `Redirect`, and `history` to navigate pages
+- [ ] Create dynamic routes and use `params`
+- [ ] Make the distinction between `state` being one _Single Source of Truth_ and `react-router` being another _Single Source of Truth_
+
+---
+
+## Lecture Notes
+
 ---
 
 ## Installation & Setup
@@ -141,7 +154,16 @@ Combine that with `if/else` logic and tracking history and you get `react-router
 ### More on Routes
 
 - Route props (`match`, `history`, `location`)
-- Nested routes
+- Nested routes and route params (`/path/:param`)
+- Query params (`/path?key1=value1&key2=value2`)
+
+```js
+import queryString from 'query-string'
+
+...
+const search = this.props.location.search;
+const queryValues = queryString.parse(search);
+```
 
 ### React Router Browser History
 
