@@ -98,6 +98,17 @@
   justify-content: space-between;
 }
 
+.options a {
+  color: #333;
+  text-decoration: none;
+  font-size: 11px;
+  padding: 10px;
+}
+
+.options a:visited {
+  color: #333;
+}
+
 .options > * {
   border-style: none;
 }

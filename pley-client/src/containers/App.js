@@ -27,7 +27,35 @@ const getRouteInfo = routeString => {
 
 class App extends Component {
   state = {
-    route: "home"
+    route: "home",
+    customers: [],
+    loading: true
+  };
+
+  componentDidMount() {
+    fetch("http://localhost:3000/api/v1/customers")
+      .then(res => res.json())
+      .then(data => {
+        this.setState({
+          customers: data,
+          loading: false
+        });
+      });
+  }
+
+  addReview = review => {
+    const updatedCustomers = this.state.customers.map(customer => {
+      if (customer.id === review.customer_id) {
+        return {
+          ...customer,
+          reviews: [...customer.reviews, review]
+        };
+      } else {
+        return customer;
+      }
+    });
+
+    this.setState({ customers: updatedCustomers });
   };
 
   setCurrentPage = route => this.setState({ route });
@@ -56,7 +84,15 @@ class App extends Component {
     return (
       <div className="app">
         <Navbar setCurrentPage={this.setCurrentPage} />
-        {this.renderPage()}
+        {this.state.loading ? (
+          <img
+            alt="loading..."
+            className="loader"
+            src="https://www.macupdate.com/images/icons256/54019.png"
+          />
+        ) : (
+          this.renderPage()
+        )}
       </div>
     );
   }
