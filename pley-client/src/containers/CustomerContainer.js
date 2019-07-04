@@ -9,6 +9,7 @@ class CustomerContainer extends React.Component {
           this.props.customers.map(customer => {
             return (
               <CustomerCard
+                history={this.props.history}
                 key={customer.id}
                 {...customer}
                 setCurrentCustomer={this.props.setCurrentCustomer}

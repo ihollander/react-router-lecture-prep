@@ -7,10 +7,14 @@ function CustomerCard({
   avatar_url,
   name,
   average_rating,
-  average_tip_rating
+  average_tip_rating,
+  history
 }) {
   return (
-    <div onClick={() => setCurrentCustomer(id)} className="customer-card">
+    <div
+      onClick={() => history.push(`/customers/${id}`)}
+      className="customer-card"
+    >
       <div className="card-image">
         <img src={avatar_url} alt={name} />
       </div>

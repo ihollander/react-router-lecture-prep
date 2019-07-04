@@ -1,46 +1,54 @@
 import React from "react";
 import CustomerContainer from "./CustomerContainer";
 import CustomerPage from "./CustomerPage";
+import queryString from "query-string";
+import { Route, Switch } from "react-router-dom";
 
 class AllCustomersPage extends React.Component {
   getSearchedCustomers() {
-    if (this.props.search !== "") {
+    const search = this.props.location.search;
+    const queryValues = queryString.parse(search);
+
+    if (queryValues.search) {
       return this.props.customers.filter(customer => {
         return customer.name
           .toLowerCase()
-          .includes(this.props.search.toLowerCase());
+          .includes(queryValues.search.toLowerCase());
       });
     } else {
       return this.props.customers;
     }
   }
 
-  getSelectedCustomer() {
-    return this.props.customers.find(
-      customer => customer.id === this.props.currentCustomerId
-    );
-  }
-
   render() {
-    if (this.props.currentCustomerId) {
-      return (
-        <CustomerPage
-          customer={this.getSelectedCustomer()}
-          addReview={this.props.addReview}
+    return (
+      <Switch>
+        <Route
+          path="/customers/:id"
+          render={routeProps => (
+            <CustomerPage
+              {...routeProps}
+              customers={this.props.customers}
+              addReview={this.props.addReview}
+            />
+          )}
         />
-      );
-    } else {
-      return (
-        <div className="home-page">
-          <CustomerContainer
-            customers={this.getSearchedCustomers()}
-            setCurrentCustomer={this.props.setCurrentCustomer}
-            customerId={this.props.customerId}
-            category="All Customers"
-          />
-        </div>
-      );
-    }
+        <Route
+          path="/customers"
+          render={routeProps => (
+            <div className="home-page">
+              <CustomerContainer
+                {...routeProps}
+                customers={this.getSearchedCustomers()}
+                setCurrentCustomer={this.props.setCurrentCustomer}
+                customerId={this.props.customerId}
+                category="All Customers"
+              />
+            </div>
+          )}
+        />
+      </Switch>
+    );
   }
 }
 
