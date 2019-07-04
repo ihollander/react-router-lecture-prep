@@ -15,15 +15,9 @@ class App extends Component {
   };
 
   addReview = review => {
-    const foundCustomer = this.state.customers.find(customer => {
-      return customer.id === review.customer_id;
-    });
-
-    foundCustomer.reviews.push(review);
-
     const updatedCustomers = this.state.customers.map(customer => {
-      if (customer.id === foundCustomer.id) {
-        return foundCustomer;
+      if (customer.id === review.customer_id) {
+        return { ...customer, reviews: [...customer.reviews, review] };
       } else {
         return customer;
       }
