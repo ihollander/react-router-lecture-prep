@@ -1,6 +1,5 @@
 import React from "react";
 import SearchBar from "../components/SearchBar";
-import CustomerContainer from "./CustomerContainer";
 
 class HomePage extends React.Component {
   state = {
@@ -24,15 +23,7 @@ class HomePage extends React.Component {
   render() {
     return (
       <div className="home-page">
-        <SearchBar
-          setFilter={this.setFilter}
-          filterValue={this.state.filterValue}
-        />
-        <CustomerContainer
-          selectCustomer={this.props.selectCustomer}
-          category="Worst Customers"
-          customers={this.applyFilter()}
-        />
+        <SearchBar setCurrentPage={this.props.setCurrentPage} />
       </div>
     );
   }

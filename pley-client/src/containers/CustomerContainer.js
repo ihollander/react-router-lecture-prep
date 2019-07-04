@@ -4,19 +4,20 @@ import CustomerCard from "../components/CustomerCard";
 class CustomerContainer extends React.Component {
   render() {
     return (
-      <div className="customer-container">
-        <h3>{this.props.category}</h3>
-        <div className="card-container">
-          {this.props.customers.map(customer => {
+      <div className="card-container">
+        {this.props.customers.length ? (
+          this.props.customers.map(customer => {
             return (
               <CustomerCard
                 key={customer.id}
                 {...customer}
-                selectCustomer={this.props.selectCustomer}
+                setCurrentPage={this.props.setCurrentPage}
               />
             );
-          })}
-        </div>
+          })
+        ) : (
+          <h3>No customers found</h3>
+        )}
       </div>
     );
   }
