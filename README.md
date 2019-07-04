@@ -1,6 +1,21 @@
 # React Router
 
 ---
+## SWBAT
+
+- [ ] Create a multi-page SPA
+- [ ] Explain the advantages of using React Router
+- [ ] Utilize the most common `react-router` components to build a SPA: `BrowserRouter`, `Link`, `NavLink`, `Route`, `Switch`
+- [ ] Use `push`, `Redirect`, and `history` to navigate pages
+- [ ] Create dynamic routes and use `params`
+- [ ] Make the distinction between `state` being one _Single Source of Truth_ and `react-router` being another _Single Source of Truth_
+
+---
+## Lecture Notes
+
+What're some of the limitations of an SPA (single-page application)?
+
+---
 
 ## Installation & Setup
 
