@@ -5,17 +5,21 @@ import ReviewForm from "../components/ReviewForm";
 
 class CustomerPage extends React.Component {
   render() {
+    const customer = this.props.customers.find(
+      customer => customer.id === parseInt(this.props.match.params.id)
+    );
+    if (!customer) {
+      return <div>Loading...</div>;
+    }
+
     return (
       <div className="customer-page">
-        <UserDetails {...this.props.customer} />
+        <UserDetails {...customer} />
         <ReviewContainer
-          reviews={this.props.customer.reviews}
-          customerName={this.props.customer.name}
+          reviews={customer.reviews}
+          customerName={customer.name}
         />
-        <ReviewForm
-          addReview={this.props.addReview}
-          customerID={this.props.customer.id}
-        />
+        <ReviewForm addReview={this.props.addReview} customerID={customer.id} />
       </div>
     );
   }

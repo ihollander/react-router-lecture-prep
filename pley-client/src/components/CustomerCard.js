@@ -1,5 +1,6 @@
 import React from "react";
 import StarRating from "./StarRating";
+import { withRouter } from "react-router-dom";
 
 function CustomerCard({
   setCurrentCustomer,
@@ -7,10 +8,14 @@ function CustomerCard({
   avatar_url,
   name,
   average_rating,
-  average_tip_rating
+  average_tip_rating,
+  history
 }) {
   return (
-    <div onClick={() => setCurrentCustomer(id)} className="customer-card">
+    <div
+      onClick={() => history.push(`/customers/${id}`)}
+      className="customer-card"
+    >
       <div className="card-image">
         <img src={avatar_url} alt={name} />
       </div>
@@ -26,4 +31,4 @@ function CustomerCard({
   );
 }
 
-export default CustomerCard;
+export default withRouter(CustomerCard);

@@ -1,46 +1,100 @@
 import React from "react";
 import CustomerContainer from "./CustomerContainer";
 import CustomerPage from "./CustomerPage";
+import queryString from "query-string";
+import { Route, Switch } from "react-router-dom";
 
 class AllCustomersPage extends React.Component {
+  state = {
+    customers: [],
+    loading: true
+  };
+
+  componentDidMount() {
+    fetch("http://localhost:3000/api/v1/customers")
+      .then(res => res.json())
+      .then(data => {
+        this.setState({
+          customers: data,
+          loading: false
+        });
+      });
+  }
+
+  addReview = review => {
+    const updatedCustomers = this.state.customers.map(customer => {
+      if (customer.id === review.customer_id) {
+        return {
+          ...customer,
+          reviews: [...customer.reviews, review]
+        };
+      } else {
+        return customer;
+      }
+    });
+
+    this.setState({ customers: updatedCustomers });
+  };
+
   getSearchedCustomers() {
-    if (this.props.search !== "") {
-      return this.props.customers.filter(customer => {
+    const query = this.props.location.search;
+    const queryValues = queryString.parse(query);
+    if (queryValues.searchTerm) {
+      return this.state.customers.filter(customer => {
         return customer.name
           .toLowerCase()
-          .includes(this.props.search.toLowerCase());
+          .includes(queryValues.searchTerm.toLowerCase());
       });
     } else {
-      return this.props.customers;
+      return this.state.customers;
     }
   }
 
   getSelectedCustomer() {
-    return this.props.customers.find(
+    return this.state.customers.find(
       customer => customer.id === this.props.currentCustomerId
     );
   }
 
   render() {
-    if (this.props.currentCustomerId) {
+    console.log("CustomerPage props:", this.props);
+    if (this.state.loading) {
       return (
-        <CustomerPage
-          customer={this.getSelectedCustomer()}
-          addReview={this.props.addReview}
+        <img
+          alt="loading..."
+          className="loader"
+          src="https://www.macupdate.com/images/icons256/54019.png"
         />
       );
-    } else {
-      return (
-        <div className="home-page">
-          <CustomerContainer
-            customers={this.getSearchedCustomers()}
-            setCurrentCustomer={this.props.setCurrentCustomer}
-            customerId={this.props.customerId}
-            category="All Customers"
-          />
-        </div>
-      );
     }
+
+    return (
+      <div className="home-page">
+        <Switch>
+          <Route
+            path={`${this.props.match.url}/:id`}
+            render={routeProps => (
+              <CustomerPage
+                {...routeProps}
+                customers={this.state.customers}
+                addReview={this.addReview}
+              />
+            )}
+          />
+          <Route
+            path={this.props.match.url}
+            render={() => (
+              <CustomerContainer
+                customers={this.getSearchedCustomers()}
+                setCurrentCustomer={this.props.setCurrentCustomer}
+                customerId={this.props.customerId}
+                category="All Customers"
+              />
+            )}
+          />
+        </Switch>
+      </div>
+    );
   }
 }
 
