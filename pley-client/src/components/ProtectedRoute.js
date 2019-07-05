@@ -8,3 +8,4 @@ export default function ProtectedRoute(props) {
     return <Redirect to="/" />;
   }
 }
+// more advanced version: https://reacttraining.com/react-router/web/example/auth-workflow
