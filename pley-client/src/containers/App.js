@@ -4,13 +4,15 @@ import HomePage from "./HomePage";
 import AllCustomersPage from "./AllCustomersPage";
 import Navbar from "./Navbar";
 import ProfilePage from "./ProfilePage";
+import ProtectedRoute from "../components/ProtectedRoute";
 import { Route, Switch } from "react-router-dom";
 
 class App extends Component {
   state = {
     page: "home",
     search: "",
-    currentCustomerId: null
+    currentCustomerId: null,
+    isSignedIn: true
   };
 
   setCurrentPage = page =>
@@ -20,6 +22,9 @@ class App extends Component {
     this.setState({ currentCustomerId, page: "customers" });
 
   setSearchTerm = search => this.setState({ search, page: "customers" });
+
+  handleSignIn = () => this.setState({ isSignedIn: true });
+  handleSignOut = () => this.setState({ isSignedIn: false });
 
   // renderPage() {
   //   console.log("App state", this.state);
@@ -46,7 +51,12 @@ class App extends Component {
   render() {
     return (
       <div className="app">
-        <Navbar setCurrentPage={this.setCurrentPage} />
+        <Navbar
+          setCurrentPage={this.setCurrentPage}
+          isSignedIn={this.state.isSignedIn}
+          handleSignIn={this.handleSignIn}
+          handleSignOut={this.handleSignOut}
+        />
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route
@@ -60,7 +70,11 @@ class App extends Component {
               />
             )}
           />
-          <Route path="/profile" component={ProfilePage} />
+          <ProtectedRoute
+            path="/profile"
+            isSignedIn={this.state.isSignedIn}
+            component={ProfilePage}
+          />
           <Route render={() => <h1>Page Not Found 404</h1>} />
         </Switch>
       </div>

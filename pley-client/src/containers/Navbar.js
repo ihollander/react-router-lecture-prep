@@ -13,7 +13,11 @@ class Navbar extends React.Component {
             alt="logo"
           />
         </Link>
-        <NavOptions />
+        <NavOptions
+          isSignedIn={this.props.isSignedIn}
+          handleSignIn={this.props.handleSignIn}
+          handleSignOut={this.props.handleSignOut}
+        />
       </div>
     );
   }
