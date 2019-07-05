@@ -9,22 +9,13 @@ class App extends Component {
   state = {
     page: "home",
     search: "",
-    currentCustomerId: null,
     isSignedIn: true
   };
 
   setCurrentPage = page => {
     this.setState({
       page,
-      search: "",
-      currentCustomerId: null
-    });
-  };
-
-  setCurrentCustomer = currentCustomerId => {
-    this.setState({
-      currentCustomerId,
-      page: "customers"
+      search: ""
     });
   };
 
@@ -42,13 +33,13 @@ class App extends Component {
     switch (this.state.page) {
       case "home":
         return <HomePage setSearchTerm={this.setSearchTerm} />;
+      case "customers/show":
       case "customers":
         return (
           <AllCustomersPage
             search={this.state.search}
-            currentCustomerId={this.state.currentCustomerId}
-            setCurrentCustomer={this.setCurrentCustomer}
-            addReview={this.addReview}
+            page={this.state.page}
+            setCurrentPage={this.setCurrentPage}
           />
         );
       case "profile":

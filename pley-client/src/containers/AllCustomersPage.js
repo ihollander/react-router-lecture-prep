@@ -5,6 +5,7 @@ import CustomerPage from "./CustomerPage";
 class AllCustomersPage extends React.Component {
   state = {
     customers: [],
+    currentCustomerId: null,
     loading: true
   };
 
@@ -48,11 +49,21 @@ class AllCustomersPage extends React.Component {
 
   getSelectedCustomer() {
     return this.state.customers.find(
-      customer => customer.id === this.props.currentCustomerId
+      customer => customer.id === this.state.currentCustomerId
     );
   }
 
+  handleSelectCustomer = id => {
+    this.setState(
+      {
+        currentCustomerId: id
+      },
+      () => this.props.setCurrentPage("customers/show")
+    );
+  };
+
   render() {
+    console.log(this.props);
     if (this.state.loading) {
       return (
         <img
@@ -63,24 +74,27 @@ class AllCustomersPage extends React.Component {
       );
     }
 
-    if (this.props.currentCustomerId) {
-      return (
-        <CustomerPage
-          customer={this.getSelectedCustomer()}
-          addReview={this.addReview}
-        />
-      );
-    } else {
-      return (
-        <div className="home-page">
-          <CustomerContainer
-            customers={this.getSearchedCustomers()}
-            setCurrentCustomer={this.props.setCurrentCustomer}
-            customerId={this.props.customerId}
-            category="All Customers"
+    switch (this.props.page) {
+      case "customers/show":
+        return (
+          <CustomerPage
+            customer={this.getSelectedCustomer()}
+            addReview={this.addReview}
           />
-        </div>
-      );
+        );
+      case "customers":
+        return (
+          <div className="home-page">
+            <CustomerContainer
+              customers={this.getSearchedCustomers()}
+              setCurrentCustomer={this.handleSelectCustomer}
+              customerId={this.props.customerId}
+              category="All Customers"
+            />
+          </div>
+        );
+      default:
+        return null;
     }
   }
 }

@@ -12,6 +12,9 @@
 ---
 
 ## Lecture Notes
+- What does REST mean?
+
+- Why do we care about routes?
 
 ---
 
@@ -55,6 +58,20 @@
 
 ---
 
+## HTML5 History API
+
+You can manipulate the URL in your browser with these:
+
+```javascript
+window.history.pushState({}, null, "page")
+window.history.back()
+window.history.forward()
+```
+
+Combine that with `if/else` logic and tracking history and you get `react-router`.
+
+---
+
 ## Different Types of React Routers
 
 *We'll be using BrowserRouter for this lecture*
@@ -84,26 +101,24 @@ http://someurl.com/#/someroute
 
 ---
 
-## HTML5 History API
-
-You can manipulate the URL in your browser with these:
-
-```javascript
-window.history.pushState({}, null, "page")
-window.history.back()
-window.history.forward()
-```
-
-Combine that with `if/else` logic and tracking history and you get `react-router`.
-
----
-
 ## Understanding React Router
 
 ### Router (BrowserRouter / HashRouter)
 
 - Wraps our entire application
 - Listens for changes in the route/URL & makes requested information accessible
+
+### Link / NavLink
+
+- Replacement for anchor links (`<a>` tags) and enables navigation
+- While anchors reload the whole page, `Link` only reloads the parts of the UI that match the browser's location path
+- Changes the URL we see in the browser
+- Must have a 'to' prop
+
+```javascript
+<Link to='/'>Some Component</Link>
+```
+- `NavLink` is a subclass of `Link` that adds styling to the element
 
 ### Route
 
@@ -130,18 +145,6 @@ Combine that with `if/else` logic and tracking history and you get `react-router
 ### Switch
 
 - Renders first child route that matches browser location
-
-### Link / NavLink
-
-- Replacement for anchor links (`<a>` tags) and enables navigation
-- While anchors reload the whole page, `Link` only reloads the parts of the UI that match the browser's location path
-- Changes the URL we see in the browser
-- Must have a 'to' prop
-
-```javascript
-<Link to='/'>Some Component</Link>
-```
-- `NavLink` is a subclass of `Link` that adds styling to the element
 
 ### Redirect
 
