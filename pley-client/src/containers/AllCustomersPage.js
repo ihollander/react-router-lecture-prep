@@ -20,21 +20,6 @@ class AllCustomersPage extends React.Component {
       });
   }
 
-  addReview = review => {
-    const updatedCustomers = this.state.customers.map(customer => {
-      if (customer.id === review.customer_id) {
-        return {
-          ...customer,
-          reviews: [...customer.reviews, review]
-        };
-      } else {
-        return customer;
-      }
-    });
-
-    this.setState({ customers: updatedCustomers });
-  };
-
   getSearchedCustomers() {
     if (this.props.search !== "") {
       return this.state.customers.filter(customer => {
@@ -78,7 +63,7 @@ class AllCustomersPage extends React.Component {
       case "customers/show":
         return (
           <CustomerPage
-            customer={this.getSelectedCustomer()}
+            customerId={this.state.currentCustomerId}
             addReview={this.addReview}
           />
         );
