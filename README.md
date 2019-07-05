@@ -151,6 +151,19 @@ Combine that with `if/else` logic and tracking history and you get `react-router
 <Redirect to="/some-path" />
 ```
 
+- Basic auth routing
+
+```js
+function ProtectedRoute(props) {
+  if (props.isSignedIn) {
+    return <Route path={props.path} component={props.component} />;
+  } else {
+    return <Redirect to="/" />;
+  }
+}
+// more advanced version: https://reacttraining.com/react-router/web/example/auth-workflow
+```
+
 ### More on Routes
 
 - Route props (`match`, `history`, `location`)

@@ -1,13 +1,15 @@
 import React from "react";
 
-const NavOptions = props => {
+const NavOptions = ({ setCurrentPage, isSignedIn, setSignIn }) => {
   return (
     <div className="options">
-      <button onClick={() => props.setCurrentPage("customers")}>
-        All Customers
-      </button>
-      <button onClick={() => props.setCurrentPage("profile")}>Profile</button>
-      <button>Sign out</button>
+      <button onClick={() => setCurrentPage("customers")}>All Customers</button>
+      <button onClick={() => setCurrentPage("profile")}>Profile</button>
+      {isSignedIn ? (
+        <button onClick={() => setSignIn(false)}>Sign out</button>
+      ) : (
+        <button onClick={() => setSignIn(true)}>Sign In</button>
+      )}
     </div>
   );
 };
